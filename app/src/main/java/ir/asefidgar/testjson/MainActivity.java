@@ -28,9 +28,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText inputSearch;
     SimpleAdapter adapter;
 
-    // URL to get contacts JSON
-    private static String url = "http://www.asefidgar.ir/dic.json";
-
     ArrayList<HashMap<String, String>> contactList;
 
     @Override
@@ -38,14 +35,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         contactList = new ArrayList<>();
 
         lv = findViewById(R.id.list);
         lv.setTextFilterEnabled(true);
         inputSearch = findViewById(R.id.inputSearch);
-
-        new GetContacts().execute();
 
         inputSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -64,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        new GetContacts().execute();
+
     }
 
     private class GetContacts extends AsyncTask<Void, Void, Void> {
@@ -80,6 +76,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(Void... arg0) {
             HttpHandler sh = new HttpHandler();
+
+            String url = "http://www.asefidgar.ir/dic.json";
 
             String jsonStr = sh.makeServiceCall(url);
 
